@@ -1,0 +1,8 @@
+[user]
+	name = Kevin Gwynn
+	email = kevin.gwynn@gmail.com
+[core]
+	autocrlf = input
+	eol = lf
+[alias]
+	timeline = log --oneline --graph --decorate

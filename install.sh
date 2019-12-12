@@ -7,11 +7,14 @@ dest="$HOME"
 echo "Installing from [$cwd] to [$dest]..."
 cd $dest
 
-for f in *; do
-	echo "file = $f"
-	if [ ! -L $f ] && [ ! -d $f ]; then
-		echo "Is file"
+for f in $cwd/.[^.]*; do
+	basename=`basename $f`
+	if [ ! -L $f ] && [ ! -d $f ] && [[ "$basename" != ".gitignore" ]]; then
+		# TODO: Maybe make a backup of the destination file...
+		echo "$basename"
+		cp $f $dest
 	fi
+
 done
 
 
