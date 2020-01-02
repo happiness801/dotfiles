@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 # This is a work in progress :)
 
 #cwd="`pwd`"
