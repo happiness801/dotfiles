@@ -97,3 +97,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 alias zshconfig="vi ~/.zshrc"
 alias ohmyzsh="vi ~/.oh-my-zsh"
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Docker on Windows/Host
+export DOCKER_HOST=tcp://127.0.0.1:2375
+
+# N, the node manager
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

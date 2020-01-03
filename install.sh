@@ -39,3 +39,5 @@ for f in $filesDir/.[^.]*; do
 	fi
 
 done
+
+$filesDir/install-software.sh #TODO prompt before doing this.
