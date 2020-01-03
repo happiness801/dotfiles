@@ -1,10 +1,6 @@
 #!/bin/bash
 
-#
-
-#cwd="`pwd`"
-#filesDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# got much of this from stackoverflow
+# got some of this from stackoverflow, others.
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
 	DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
