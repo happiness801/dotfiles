@@ -1,5 +1,6 @@
-#!/bin/sh
-# This is a work in progress :)
+#!/bin/bash
+
+#
 
 #cwd="`pwd`"
 #filesDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -19,10 +20,26 @@ cd $destinationDir
 
 for f in $filesDir/.[^.]*; do
 	basename=`basename $f`
-	if [[ "$basename" != ".gitignore" ]]; then
-		# TODO: Maybe make a backup of the destination file...
-		echo "$basename"
-		ln --symbolic --verbose --interactive $f $destinationDir
+	if [[ ! "$basename" =~ (.gitignore|.git|.swp)$ ]]; then
+		targetFile="$destinationDir/$basename"
+		fileNote=""
+		#echo "$basename";
+		if [ -e "$targetFile" ] && [ ! -L "$targetFile" ]; then
+			if diff $f $targetFile
+			then
+				fileNote="(files are the same)"
+			else
+				cp $targetFile "${targetFile}-old"
+				fileNote="(files are different - copy made)"
+			fi
+		elif [ -L $targetFile ]; then
+			fileNote="(file is already a symlink--no action taken)"
+		else
+			fileNote="(new)" # file does not exist yet.
+		fi
+		echo "$basename -> $targetFile: $fileNote"
+		[[ ! -L $targetFile ]] && ln --symbolic --verbose --interactive $f $destinationDir
+
 	fi
 
 done
