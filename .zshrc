@@ -89,6 +89,16 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# WSL specific setup:
+if [ $(uname -r | sed -n 's/.*\( *Microsoft *\).*/\1/ip') ];
+then
+	echo "This is Windows WSL -- setting up DISPLAY etc"
+	export DISPLAY=${DISPLAY:-$(grep -Po '(?<=nameserver ).*' /etc/resolv.conf):0}
+	export LIBGL_ALWAYS_INDIRECT=1
+else
+	echo "Not Windows WSL"
+fi
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -108,3 +118,4 @@ export DOCKER_HOST=tcp://127.0.0.1:2375
 
 # N, the node manager
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+source /home/kirobins/.chg-ssh-aliases

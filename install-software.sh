@@ -57,3 +57,5 @@ if [[ ! -d $HOME/n ]]; then
 else
 	echo "n (node version manager) is already installed."
 fi
+
+curl -L https://itcentral.chgcompanies.com/confluence/download/attachments/11109664/.chg-ssh-aliases?version=1&modificationDate=1578074220283&api=v2&download=true --fail -o .chg-ssh-aliases2
