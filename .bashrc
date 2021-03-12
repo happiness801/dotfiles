@@ -116,11 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Docker on Windows/Host (still needed on WSL2?)
-#export DOCKER_HOST=tcp://127.0.0.1:2375
-
-sudo mount -a
-
 # Include Git Branch name in prompt if applicable
 # See: https://martinfitzpatrick.name/article/add-git-branch-name-to-terminal-prompt-mac/
 parse_git_branch() {
