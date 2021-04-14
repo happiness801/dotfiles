@@ -7,3 +7,5 @@
 	editor = vim
 [alias]
 	timeline = log --oneline --graph --decorate
+[fetch]
+	prune = true
