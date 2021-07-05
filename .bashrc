@@ -82,6 +82,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+	
+	# KAG: Grep alias to ignore compiled, binary, and third-party files
+	alias codegrep='grep --exclude-dir={.vs,.git,packages,Debug,Release,log,bin,obj,node_modules} -I'
 fi
 
 # colored GCC warnings and errors
