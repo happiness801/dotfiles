@@ -143,5 +143,8 @@ fix_wsl2_interop() {
     done
 }
 
-fix_wsl2_interop
+# Only run fix_wsl2_interop if we're actually in WSL 2
+if [[ -n "$WSL_DISTRO_NAME" ]] && [[ $(grep -i microsoft /proc/version 2>/dev/null) ]] && [[ -d "/run/WSL" ]]; then
+    fix_wsl2_interop
+fi
 
