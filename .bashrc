@@ -73,7 +73,20 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+# macOS and Linux have different approaches to colors
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    export CLICOLOR=1
+    export LSCOLORS=ExFxBxDxCxegedabagacad
+    alias ls='ls -G'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    
+    # KAG: Grep alias to ignore compiled, binary, and third-party files
+    alias codegrep='grep --exclude-dir={.vs,.git,coverage,packages,Debug,Release,log,bin,obj,node_modules} -I'
+elif [ -x /usr/bin/dircolors ]; then
+    # Linux
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
@@ -112,7 +125,14 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  # macOS with Homebrew
+  if [[ "$OSTYPE" == "darwin"* ]] && [ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then
+    . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  # macOS with older Homebrew or MacPorts
+  elif [[ "$OSTYPE" == "darwin"* ]] && [ -f /usr/local/etc/bash_completion ]; then
+    . /usr/local/etc/bash_completion
+  # Linux
+  elif [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -125,7 +145,10 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
 
-PS1="$PS1\$(parse_git_branch)"
+# Update PS1 to include git branch - only if we haven't already set it
+if [[ "$PS1" != *'$(parse_git_branch)'* ]]; then
+    PS1="$PS1\$(parse_git_branch)"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
